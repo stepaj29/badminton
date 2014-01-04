@@ -4,7 +4,9 @@
  */
 package cz.cvut.kbss.bookstore.service;
 
-import cz.cvut.kbss.bookstore.dto.BookDto;
+import cz.cvut.kbss.wpa.badminton.service.BookService;
+import cz.cvut.kbss.wpa.badminton.service.UserService;
+import cz.cvut.kbss.wpa.badminton.dto.BookDto;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;

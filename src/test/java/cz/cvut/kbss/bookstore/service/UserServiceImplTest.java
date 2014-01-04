@@ -4,7 +4,8 @@
  */
 package cz.cvut.kbss.bookstore.service;
 
-import cz.cvut.kbss.bookstore.dto.UserDto;
+import cz.cvut.kbss.wpa.badminton.service.UserService;
+import cz.cvut.kbss.wpa.badminton.dto.UserDto;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
