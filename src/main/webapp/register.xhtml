@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+        <h:head>
+
+        </h:head>
+        <h:form>
+            <p:growl sticky="true"/>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="user name : " for="age"/>
+                <p:inputText label="user name" id="name" value="#{registerBB.name}" required="true" >
+                    <f:validateLength maximum="255" />
+                </p:inputText>
+
+                <h:outputLabel value="user age : " for="age"/>
+                <p:inputText id="age" value="#{registerBB.age}" required="false">
+
+                    <!--Converter example defined using spring bean and referenced binding attribute-->
+                    <f:converter binding="#{ageConverter}"/>
+
+                    <!--Validator example1 defined using jsf's @FacesValidator and referenced by validatorId.-->
+                    <!--<f:validator  validatorId="ageValidator"/>-->
+
+                    <!--Validator example2 defined as a spring bean and referenced using the binding attribute.-->
+                    <f:validator binding="#{ageValidator2}"/>
+                </p:inputText>
+                
+                
+
+                <h:outputLabel value="password : " for="pass"/>
+                <p:password id="pass" value="#{registerBB.password}" required="true" promptLabel="User password" feedback="true"/>
+                
+                <h:outputLabel value="Is admin : " for="isAdmin"/>
+                <p:selectBooleanCheckbox value="#{registerBB.isAdmin}" />              
+                
+                <h:commandButton action="#{registerBB.storeUser()}" value="register" />
+            </h:panelGrid>
+        </h:form>
+    </body>
+</f:view>
+</html>

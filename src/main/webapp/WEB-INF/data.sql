@@ -1,0 +1,2 @@
+-- username: admin, password: admin
+INSERT INTO users (id, age, password, salt, username, isadmin) VALUES (334, 0, '44539803dfa42c3c072969f9b2a7f452f98ad8a3', '1491596c375c3557fc24c07da3ed75edb374a6d6', 'admin', true);

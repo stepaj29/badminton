@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <h:head>
+            <title>Book store</title>
+        </h:head>
+        <h:body>
+            <h1><h:outputText value="#{msg['bookstore-welcome.title']}"/></h1>
+            <p:panel style="margin-bottom: 1em">
+                <f:facet name="header">
+                    Logout
+                </f:facet>
+                <a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">Logout</a>
+            </p:panel>            
+            <p:panel>
+                <h:link outcome="user-list" value="users"/><br/>
+                <h:link outcome="register" value="register (auth forgotten by designer, try to add user while authenticated only with ROLE_USER)"/>
+            </p:panel>
+
+        </h:body>
+    </f:view>
+</html>
