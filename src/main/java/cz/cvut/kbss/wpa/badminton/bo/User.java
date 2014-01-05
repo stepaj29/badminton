@@ -1,88 +1,94 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package cz.cvut.kbss.wpa.badminton.bo;
 
 import cz.cvut.kbss.wpa.badminton.provider.HashProvider;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Entity, which represents user of the system
- * @author mickapa1
+ *
+ * @author zdeněk
  */
 @Entity
-@Table(name = "users") //user je SQL klicove slovo, nejde ho pouzit po pojmenovani tabulky
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorOptions(force=true)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type", length = 20)
+@DiscriminatorValue(value = "user")
 @Configurable(preConstruction=true)
-public class User extends AbstractBusinessObject {
+public abstract class User extends AbstractBusinessObject {
 
-    @Column(nullable = false)
-    private String userName; //max 255 chars
+    @Column(length = 40, nullable = false,unique = true)
+    private String userName;
+
+    @Column(length = 40, nullable = false)
+    private String password;
+
     @Column(length = 40, nullable = false) //40 je hash od SHA1
     private String salt;
-    @Column(length = 40, nullable = false) //40 je hash od SHA1
-    private String password;
-    private Boolean isAdmin;
-    private int age; //vse, co neni oanotovano a neni transient, je @Column
-    @OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE)
-    private List<Book> books;
+
     @Autowired
-    private transient HashProvider hashProvider; //transient fields are not persisted
+    private transient HashProvider hashProvider;
 
-    public HashProvider getHashProvider() {
-        return hashProvider;
-    }
-
-    public void setHashProvider(HashProvider hashProvider) {
-        this.hashProvider = hashProvider;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
     /**
-     * Add a book to the list of users book, if not present
-     * @param book book to be added
+     * @return the username
      */
-    public void addBook(Book book){
-        if(this.books == null){
-            books = new ArrayList<Book>();
-        }
-        if(!this.books.contains(book)){
-            books.add(book);
-        }
+    public String getUserName() {
+        return userName;
     }
 
-    public int getAge() {
-        return age;
+    /**
+     * @param username the username to set
+     */
+    public void setUserName(String username) {
+        this.userName = username;
     }
 
-    public void setAge(int age) {
-        if (age < 0) {
-            throw new IllegalArgumentException("Negative age");
-        }
-        this.age = age;
-    }
-
+    /**
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param password the password to set
+     */
     public void setPassword(String password) {
-        this.salt = hashProvider.computeHash(System.nanoTime() + "");
-        this.password = hashProvider.computeHash(password + salt);
+        this.password = this.hashProvider.computeHash(password);
+    }
+
+    /**
+     * @return the provider
+     */
+    public HashProvider getHashProvider() {
+        return hashProvider;
+    }
+
+    /**
+     * @param provider the provider to set
+     */
+    public void setHashProvider(HashProvider provider) {
+        this.hashProvider = provider;
+    }
+    
+    public boolean hasPassword(String password){
+        return hashProvider.computeHash(password + salt).equals(this.password);
     }
 
     public String getSalt() {
@@ -92,36 +98,7 @@ public class User extends AbstractBusinessObject {
     public void setSalt(String salt) {
         this.salt = salt;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
     
-    public boolean hasPassword(String password){
-        if(hashProvider.computeHash(password + salt).equals(this.password)){
-            return true;
-        }
-        return false;
-    }
+    abstract public GrantedAuthority getGrantedAtuhority();
 
-    /**
-     * @return the isAdmin
-     */
-    public Boolean isAdmin() {
-        if(isAdmin == null){
-            return false;
-        }
-        return isAdmin;
-    }
-
-    /**
-     * @param isAdmin the isAdmin to set
-     */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
 }

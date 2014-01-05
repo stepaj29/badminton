@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author user
  */
 @Component
-public class AgeConverter implements Converter{
+public class IntConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {

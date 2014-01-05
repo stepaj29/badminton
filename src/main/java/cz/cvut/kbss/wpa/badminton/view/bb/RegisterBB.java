@@ -6,6 +6,7 @@ package cz.cvut.kbss.wpa.badminton.view.bb;
 
 import cz.cvut.kbss.wpa.badminton.service.UserService;
 import cz.cvut.kbss.wpa.badminton.view.helper.FacesUtil;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,16 +20,75 @@ import org.springframework.stereotype.Component;
 @Scope(value="request")
 public class RegisterBB {
     
-    protected String name;
-    protected int age;
+    protected String userName;
     protected String password;
-    private boolean isAdmin;
+    protected String name;
+    protected String surname;
+    protected int weigth;
+    protected int height;
+    protected Date dateOfBirth;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getWeigth() {
+        return weigth;
+    }
+
+    public void setWeigth(int weigth) {
+        this.weigth = weigth;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     
     @Autowired
     protected UserService userService;
     
-    public void storeUser(){
-        userService.addUser(getName(), getPassword(), getAge(), isAdmin);
+    public void storePlayer(){
+        userService.addPlayer(
+                getUserName(),
+                getPassword(),
+                getName(),
+                getSurname(),
+                getWeigth(),
+                getHeight(),
+                getDateOfBirth()
+        );
         FacesUtil.addMessage("User was sucessfully registered");
     }
 
@@ -40,34 +100,12 @@ public class RegisterBB {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * @return the isAdmin
-     */
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    /**
-     * @param isAdmin the isAdmin to set
-     */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
     }
     
 }

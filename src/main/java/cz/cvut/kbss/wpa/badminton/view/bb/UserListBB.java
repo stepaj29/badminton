@@ -4,7 +4,8 @@
  */
 package cz.cvut.kbss.wpa.badminton.view.bb;
 
-import cz.cvut.kbss.wpa.badminton.dto.UserDto;
+import cz.cvut.kbss.wpa.badminton.dto.PlayerDTO;
+import cz.cvut.kbss.wpa.badminton.dto.UserDTO;
 import cz.cvut.kbss.wpa.badminton.service.UserService;
 import cz.cvut.kbss.wpa.badminton.view.helper.FacesUtil;
 import java.io.Serializable;
@@ -21,8 +22,8 @@ public class UserListBB implements Serializable{
     @Autowired
     private UserService userService;
     
-    public List<UserDto> getAllUsers(){
-        return userService.getAllUsers();
+    public List<PlayerDTO> getAllUsers(){
+        return userService.getAllPlayers();
     }
     
     public void deleteUser(Long id){

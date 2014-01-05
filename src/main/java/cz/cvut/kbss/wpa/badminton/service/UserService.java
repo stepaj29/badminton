@@ -4,7 +4,9 @@
  */
 package cz.cvut.kbss.wpa.badminton.service;
 
-import cz.cvut.kbss.wpa.badminton.dto.UserDto;
+import cz.cvut.kbss.wpa.badminton.dto.PlayerDTO;
+import cz.cvut.kbss.wpa.badminton.dto.UserDTO;
+import java.util.Date;
 import java.util.List;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,11 +23,24 @@ public interface UserService {
      * Add user to the system
      * @param userName username
      * @param password password as an open text (will be stored in hashed form)
-     * @param age age of the user
+     * @param Name
+     * @param Surname
+     * @param weigth
+     * @param height
+     * @param dateOfBirth
      * @return identifier of the user stored
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Long addUser(String userName, String password, int age, boolean isAdmin);
+    public Long addPlayer(
+            String userName,
+            String password,
+            String Name,
+            String Surname,
+            int weigth,
+            int height,
+            Date dateOfBirth);
+    
+    public Long addAdmin(String userName, String password);
 
     /**
      * Permanently removes the user
@@ -42,7 +57,7 @@ public interface UserService {
             "hasRole('ROLE_ADMIN') or " +
             "hasRole('ROLE_USER')")
     @Transactional(readOnly=true)
-    public UserDto getUserById(Long id);
+    public UserDTO getPlayerById(Long id);
 
     /**
      * Get all users stored in the system
@@ -52,5 +67,5 @@ public interface UserService {
             "hasRole('ROLE_ADMIN') or " +
             "hasRole('ROLE_USER')")    
     @Transactional(readOnly=true)
-    public List<UserDto> getAllUsers();
+    public List<PlayerDTO> getAllPlayers();
 }
