@@ -99,6 +99,6 @@ public abstract class User extends AbstractBusinessObject {
         this.salt = salt;
     }
     
-    abstract public GrantedAuthority getGrantedAtuhority();
+    abstract public GrantedAuthority getGrantedAuthority();
 
 }

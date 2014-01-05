@@ -138,7 +138,7 @@ public class Player extends User {
     }
 
     @Override
-    public GrantedAuthority getGrantedAtuhority() {
+    public GrantedAuthority getGrantedAuthority() {
         return new GrantedAuthorityImpl("ROLE_USER");
     }
 

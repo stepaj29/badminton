@@ -20,7 +20,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 public class Admin extends User{
 
     @Override
-    public GrantedAuthority getGrantedAtuhority() {
+    public GrantedAuthority getGrantedAuthority() {
         return new GrantedAuthorityImpl("ROLE_ADMIN");
     }
     

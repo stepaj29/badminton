@@ -70,7 +70,7 @@ public class AuthenticationService extends AbstractUserDetailsAuthenticationProv
                         throw e;
                     } else {
                         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-                        auths.add(u.getGrantedAtuhority());
+                        auths.add(u.getGrantedAuthority());
                         ud = new User(u.getUserName(), u.getPassword(), auths);
                     }
                     return ud;
